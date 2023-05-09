@@ -29,3 +29,19 @@ tweets = api.user_timeline(screen_name= '@elonmusk',
 print(tweets)
 
 
+tweet_list = []
+for tweet in tweets:
+    text = tweet._json["full_text"]
+
+    refined_tweet = {
+        "user": tweet.user.screen_name,
+        "text": text,
+        "like_count": tweet.favorite_count,
+        "retweet_count": tweet.retweet_count,
+        "created_at": tweet.created_at
+    }
+
+    tweet_list.append(refined_tweet)
+
+df = pd.DataFrame(tweet_list)
+df.to_csv("elonmusk_tweets.csv")
